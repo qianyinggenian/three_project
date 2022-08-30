@@ -1,10 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-    </div>
+    <home></home>
   </div>
 </template>
+<script>
+// @ is an alias to /src
+import home from '@/views/Home';
 
+export default {
+  name: 'Home',
+  components: {
+    home
+  },
+  data () {
+    return {};
+  },
+  methods: {
+  }
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
