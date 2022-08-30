@@ -5,6 +5,7 @@
 <script>
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 export default {
   name: 'index',
   data () {
@@ -28,6 +29,13 @@ export default {
       const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
       const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
       const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      // 修改物体的位置
+      // cube.position.set(5, 0, 0);
+      // cube.position.x = 3;
+      // 缩放
+      // cube.scale.set(3, 2, 1);
+      // 旋转
+      cube.rotation.set(Math.PI / 4, 0, 0);
       scene.add(cube);
       // 添加渲染器
       const renderer = new THREE.WebGLRenderer();
@@ -40,11 +48,21 @@ export default {
       // 创建轨道控制器
       const controls = new OrbitControls(camera, renderer.domElement);
       console.log(controls);
+      // 添加坐标轴
+      const axesHelper = new THREE.AxesHelper(30);
+      scene.add(axesHelper);
 
       function render () {
+        cube.position.x += 0.01;
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        if (cube.position.x > 5) {
+          cube.position.x = 0;
+        }
         renderer.render(scene, camera);
         requestAnimationFrame(render);
       }
+
       render();
     }
   }
