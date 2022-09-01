@@ -56,7 +56,7 @@ export default {
       const axesHelper = new THREE.AxesHelper(30);
       scene.add(axesHelper);
       // 设置动画
-      const animate1 = gsap.to(cube.position, {
+      gsap.to(cube.position, {
         x: 5,
         duration: 5,
         // 设置重复次数, 无数次循环 -1
@@ -79,12 +79,21 @@ export default {
         ease: 'power1.inOut'
       });
       window.addEventListener('dblclick', () => {
-        if (animate1.isActive()) {
-          // 暂停
-          animate1.pause();
+        // if (animate1.isActive()) {
+        //   // 暂停
+        //   animate1.pause();
+        // } else {
+        //   // 恢复
+        //   animate1.resume();
+        // }
+        // 双击控制屏幕进入全屏，退出全屏
+        const fullscreenElement = document.fullscreenElement;
+        if (fullscreenElement) {
+          // 退出全屏，使用document对象
+          document.exitFullscreen();
         } else {
-          // 恢复
-          animate1.resume();
+          // 让画布对象全屏
+          renderer.domElement.requestFullscreen();
         }
       });
 
