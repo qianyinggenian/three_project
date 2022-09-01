@@ -52,11 +52,18 @@ export default {
       const axesHelper = new THREE.AxesHelper(30);
       scene.add(axesHelper);
 
-      function render (time) {
-        cube.position.x = time / 1000;
-        if (cube.position.x > 5) {
-          cube.position.x = 0;
-        }
+      // 设置时钟
+      const clock = new THREE.Clock();
+
+      function render () {
+        // 获取时钟运行的总时长
+        const time = clock.getElapsedTime();
+        // const deltaTime = clock.getDelta();
+
+        cube.position.x = time % 5;
+        // if (cube.position.x > 5) {
+        //   cube.position.x = 0;
+        // }
         renderer.render(scene, camera);
         // 默认传入时间
         requestAnimationFrame(render);
