@@ -4,6 +4,9 @@
 
 <script>
 import * as THREE from 'three';
+// 导入动画库
+import gsap from 'gsap';
+// 导入轨道控制器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export default {
@@ -51,19 +54,40 @@ export default {
       // 添加坐标轴
       const axesHelper = new THREE.AxesHelper(30);
       scene.add(axesHelper);
-
-      // 设置时钟
-      const clock = new THREE.Clock();
+      // 设置动画
+      const animate1 = gsap.to(cube.position, {
+        x: 5,
+        duration: 5,
+        // 设置重复次数, 无数次循环 -1
+        repeat: -1,
+        // 设置往返运动
+        yoyo: true,
+        // delay,设置延迟2秒运动
+        delay: 2,
+        ease: 'power1.inOut',
+        onComplete: () => {
+          console.log('动画完成');
+        },
+        onStart: () => {
+          console.log('动画开始');
+        }
+      });
+      gsap.to(cube.rotation, {
+        x: 2 * Math.PI,
+        duration: 5,
+        ease: 'power1.inOut'
+      });
+      window.addEventListener('dblclick', () => {
+        if (animate1.isActive()) {
+          // 暂停
+          animate1.pause();
+        } else {
+          // 恢复
+          animate1.resume();
+        }
+      });
 
       function render () {
-        // 获取时钟运行的总时长
-        const time = clock.getElapsedTime();
-        // const deltaTime = clock.getDelta();
-
-        cube.position.x = time % 5;
-        // if (cube.position.x > 5) {
-        //   cube.position.x = 0;
-        // }
         renderer.render(scene, camera);
         // 默认传入时间
         requestAnimationFrame(render);
