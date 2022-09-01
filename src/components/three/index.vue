@@ -52,14 +52,13 @@ export default {
       const axesHelper = new THREE.AxesHelper(30);
       scene.add(axesHelper);
 
-      function render () {
-        cube.position.x += 0.01;
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+      function render (time) {
+        cube.position.x = time / 1000;
         if (cube.position.x > 5) {
           cube.position.x = 0;
         }
         renderer.render(scene, camera);
+        // 默认传入时间
         requestAnimationFrame(render);
       }
 
