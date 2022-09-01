@@ -52,7 +52,6 @@ export default {
       const controls = new OrbitControls(camera, renderer.domElement);
       // 设置控制器的阻尼,让控制器更加逼真，必须在循环调用是调用update();
       controls.enableDamping = true;
-      console.log(controls);
       // 添加坐标轴
       const axesHelper = new THREE.AxesHelper(30);
       scene.add(axesHelper);
