@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from 'gsap';
 
+// 纹理
 export default {
 
   initThree () {
@@ -13,8 +14,21 @@ export default {
     camera.position.set(0, 0, 10);
     // 将相机加入场景中
     scene.add(camera);
+    // 导入纹理
+    const textureLoader = new THREE.TextureLoader();
+    // const menUrl = require('./../../../../dist/textures/men.jpg');
+    const menUrl = require('./../textures/men.jpg');
+    const doorColorTexture = textureLoader.load(menUrl);
     // 添加物体
     // 创建几何体
+    const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1);
+    // 添加材质
+    const basicMaterial = new THREE.MeshBasicMaterial({
+      color: '#ffff00',
+      map: doorColorTexture
+    });
+    const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
+    scene.add(cube);
     // 添加渲染器
     const renderer = new THREE.WebGLRenderer();
     // 设置渲染器大小

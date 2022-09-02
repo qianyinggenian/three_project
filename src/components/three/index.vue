@@ -166,6 +166,8 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.as {
+  background-image: url("../../../dist/textures/men.jpg");
+}
 </style>
