@@ -11,12 +11,14 @@ import * as dat from 'dat.gui';
 // 导入轨道控制器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+const gui = new dat.GUI();
 export default {
   name: 'index',
   data () {
     return {};
   },
   mounted () {
+    console.log(33333333333);
     this.initThree();
   },
   methods: {
@@ -42,7 +44,6 @@ export default {
       // 旋转
       cube.rotation.set(Math.PI / 4, 0, 0);
       scene.add(cube);
-      const gui = new dat.GUI();
       gui.add(cube.position, 'x').min(0).max(5).step(0.01).name('移动X轴').onChange((value) => {
         console.log('值被修改：', value);
       }).onFinishChange((value) => {
@@ -155,6 +156,11 @@ export default {
         ease: 'power1.inOut'
       });
     }
+  },
+  destroyed () {
+    console.log(gui.__folders);
+    delete gui.__folders.设置立方体;
+    gui.domElement.remove();
   }
 };
 </script>
