@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-button plain @click="handleClick">朴素按钮</el-button>
+<!--    <el-button plain @click="handleClick">朴素按钮</el-button>-->
     <three v-if="isShowThree"></three>
     <mash v-if="!isShowThree"></mash>
   </div>
@@ -18,7 +18,7 @@ export default {
   },
   data () {
     return {
-      isShowThree: true,
+      isShowThree: false,
       isShowMash: false
     };
   },
