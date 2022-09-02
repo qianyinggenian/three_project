@@ -3,18 +3,18 @@
 </template>
 
 <script>
-import mesh02 from '@/components/three/methods/mesh02';
+import mesh03 from '@/components/three/methods/mesh03';
 export default {
   name: 'index',
   data () {
     return {};
   },
-  mixins: [mesh02],
+  mixins: [mesh03],
   mounted () {
     this.initThree();
   },
   methods: {
-    ...mesh02
+    ...mesh03
   }
 };
 </script>
