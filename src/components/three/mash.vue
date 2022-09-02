@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>11</div>
 </template>
 
 <script>
@@ -10,6 +10,7 @@ import gsap from 'gsap';
 import * as dat from 'dat.gui';
 // 导入轨道控制器
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 let datGUI;
 export default {
   name: 'index',
@@ -17,7 +18,7 @@ export default {
     return {};
   },
   mounted () {
-    console.log(33333333333);
+    console.log(2222222);
     this.initThree();
   },
   methods: {
@@ -43,7 +44,6 @@ export default {
       // 旋转
       cube.rotation.set(Math.PI / 4, 0, 0);
       scene.add(cube);
-
       const gui = new dat.GUI();
       datGUI = gui;
       gui.add(cube.position, 'x').min(0).max(5).step(0.01).name('移动X轴').onChange((value) => {
