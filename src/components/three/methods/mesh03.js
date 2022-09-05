@@ -17,8 +17,10 @@ export default {
     // 导入纹理
     const textureLoader = new THREE.TextureLoader();
     // const menUrl = require('./../../../../dist/textures/men.jpg');
-    const menUrl = require('./../textures/men.jpg');
+    const menUrl = require('./../textures/door/color.jpg');
     const doorColorTexture = textureLoader.load(menUrl);
+    const minUrl = require('./../textures/minecraft.png');
+    const textures = textureLoader.load(minUrl);
     // 设置纹理偏移
     // doorColorTexture.offset.x = 0.5;
     // doorColorTexture.offset.y = 0.5;
@@ -40,7 +42,8 @@ export default {
     // 添加材质
     const basicMaterial = new THREE.MeshBasicMaterial({
       color: '#ffff00',
-      map: doorColorTexture
+      // map: doorColorTexture
+      map: textures
     });
     const cube = new THREE.Mesh(cubeGeometry, basicMaterial);
     scene.add(cube);
