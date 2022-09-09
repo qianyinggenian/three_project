@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import gsap from 'gsap';
+// 导入dat.gui
+import * as dat from 'dat.gui';
 
 // 灯光与阴影
 // 1、材质要满足能够对光照有反应
@@ -40,9 +42,30 @@ export default {
     scene.add(light);
     // 直线光源
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(10, 10, 10);
+    directionalLight.position.set(5, 5, 5);
     directionalLight.castShadow = true;
+    // 设置阴影贴图模糊度
+    directionalLight.shadow.radius = 20;
+    // 设置阴影贴图的分辨率
+    directionalLight.shadow.mapSize.set(4096, 4096);
+
+    // 设置平行光投射相机的属性
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+    directionalLight.shadow.camera.top = 5;
+    directionalLight.shadow.camera.bottom = -5;
+    directionalLight.shadow.camera.left = -5;
+    directionalLight.shadow.camera.right = 5;
     scene.add(directionalLight);
+
+    const gui = new dat.GUI();
+    gui.add(directionalLight.shadow.camera, 'near')
+      .min(0)
+      .max(10)
+      .step(0.1)
+      .onChange(() => {
+        directionalLight.shadow.camera.updateProjectionMatrix();
+      });
     // 添加渲染器
     const renderer = new THREE.WebGLRenderer();
     // 开启场景中的阴影贴图

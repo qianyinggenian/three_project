@@ -12,7 +12,7 @@
     "dat.gui": "^0.7.9",
     "element-ui": "^2.15.9",
     "gsap": "^3.11.0",
-    "three": "^0.143.0",
+    "three": "^0.137.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
@@ -32,6 +32,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.12.0",
+    "parcel-bundler": "^1.12.5",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
   },
