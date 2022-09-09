@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import mesh from '@/components/three/methods/mesh06';
+import mesh from '@/components/three/methods/mesh13';
 export default {
   name: 'index',
   data () {
