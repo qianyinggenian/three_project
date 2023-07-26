@@ -1,20 +1,15 @@
 <template>
   <div class="home">
-<!--    <el-button plain @click="handleClick">朴素按钮</el-button>-->
-    <three v-if="isShowThree"></three>
-    <mash v-if="!isShowThree"></mash>
+    <keyframes/>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import mash from '@/components/three/mash';
-import three from '@/components/three/index';
-
+import keyframes from '@/views/animation/keyframes/index.vue';
 export default {
   name: 'Home',
   components: {
-    mash,
-    three
+    keyframes
   },
   data () {
     return {
