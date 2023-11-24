@@ -1,5 +1,6 @@
 <template>
- <div id="container"></div>
+ <div id="container" ref="keyframes" class="keyframes">
+ </div>
 </template>
 
 <script>
@@ -26,22 +27,27 @@ export default {
 
       const clock = new THREE.Clock();
       const container = document.getElementById('container');
+      const el = container;
 
       const stats = new Stats();
+      stats.domElement.style.position = 'absolute';
+      stats.domElement.style.left = '5px';
+      stats.domElement.style.top = '5px';
       container.appendChild(stats.dom);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(el.clientWidth, el.clientHeight);
       container.appendChild(renderer.domElement);
 
       const pmremGenerator = new THREE.PMREMGenerator(renderer);
 
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xbfe3dd);
-      scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
-
-      const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 100);
+      scene.environment = pmremGenerator.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+      const light = new THREE.AmbientLight(0xffffff); // 柔和的白光
+      scene.add(light);
+      const camera = new THREE.PerspectiveCamera(40, el.clientWidth / el.clientHeight, 1, 100);
       camera.position.set(5, 2, 8);
 
       const controls = new OrbitControls(camera, renderer.domElement);
@@ -57,7 +63,7 @@ export default {
       loader.setDRACOLoader(dracoLoader);
       loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
         const model = gltf.scene;
-        model.position.set(1, 1, 0);
+        model.position.set(1, 1, 1);
         model.scale.set(0.01, 0.01, 0.01);
         scene.add(model);
 
@@ -70,10 +76,10 @@ export default {
       });
 
       window.onresize = function () {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.aspect = el.clientWidth / el.clientHeight;
         camera.updateProjectionMatrix();
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(el.clientWidth, el.clientHeight);
       };
 
       function animate () {
@@ -95,4 +101,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.keyframes {
+  width: 100%;
+  height: 100%;
+}
 </style>

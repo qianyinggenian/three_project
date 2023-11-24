@@ -1,15 +1,14 @@
 <template>
   <div class="home">
-    <keyframes/>
+    dfsddf
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import keyframes from '@/views/animation/keyframes/index.vue';
 export default {
   name: 'Home',
   components: {
-    keyframes
+    // keyframes
   },
   data () {
     return {
@@ -18,9 +17,6 @@ export default {
     };
   },
   methods: {
-    handleClick () {
-      this.isShowThree = !this.isShowThree;
-    }
   }
 };
 </script>

@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <home></home>
+    <router-view/>
   </div>
 </template>
 <script>
-// @ is an alias to /src
-import home from '@/views/Home';
 
 export default {
   name: 'Home',
   components: {
-    home
   },
   data () {
     return {};
@@ -25,18 +22,10 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    height: 100vh;
+    width: 100%;
   }
-
-  #nav {
-    padding: 30px;
-
-    a {
-      font-weight: bold;
-      color: #2c3e50;
-
-      &.router-link-exact-active {
-        color: #42b983;
-      }
-    }
+  * {
+    margin: 0;
   }
 </style>
