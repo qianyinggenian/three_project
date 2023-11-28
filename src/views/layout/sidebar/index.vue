@@ -112,4 +112,7 @@ export default {
     width: 63px;
   }
 }
+ul {
+  padding-inline-start: 10px
+}
 </style>

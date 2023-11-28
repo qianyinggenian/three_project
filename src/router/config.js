@@ -5,16 +5,16 @@ export const config = [
     path: '/setting',
     name: 'setting',
     meta: {
-      title: '基础设置'
+      title: '入门与调试'
     },
     component: redirectComp,
     children: [
       {
-        path: '/keyframes',
-        name: 'keyframes',
-        component: () => import('@/views/animation/keyframes/index.vue'),
+        path: '/orbitControls',
+        name: 'orbitControls',
+        component: () => import('@/views/gettingStartedAndDebugging/orbitControls/index.vue'),
         meta: {
-          title: '导航设置'
+          title: '轨道控制器查看物体'
         }
       }
     ]
@@ -25,6 +25,14 @@ export const config = [
     component: test,
     meta: {
       title: '测试'
+    }
+  },
+  {
+    path: '/keyframes',
+    name: 'keyframes',
+    component: () => import('@/views/animation/keyframes/index.vue'),
+    meta: {
+      title: 'keyframes'
     }
   }
 ];
