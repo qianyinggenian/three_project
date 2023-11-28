@@ -1,19 +1,41 @@
 <template>
-<div id="container" class="container"></div>
+<div id="container" class="container" ref="el"></div>
 </template>
 
 <script>
+
+import { mapState } from 'vuex';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export default {
   name: 'index',
   components: {},
   data () {
-    return {};
+    return {
+      renderer: null
+    };
   },
   props: {},
-  watch: {},
-  computed: {},
+  watch: {
+    isCollapse: {
+      handler (newVal) {
+        this.$nextTick(() => {
+          const el = this.$refs.el;
+          console.log('重置', el.clientWidth);
+          this.resizeFn();
+        });
+      }
+    }
+  },
+  computed: {
+
+    ...mapState('app', [
+      'isCollapse',
+      'isGreyOut',
+      'isShowWaterMark',
+      'personalMsg',
+      'waterMarkArea'])
+  },
   mounted () {
     this.$nextTick(() => {
       this.init();
@@ -22,6 +44,7 @@ export default {
   methods: {
     init () {
       const el = document.getElementById('container');
+      console.log('el.clientWidth1', el.clientWidth);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
         75,
@@ -41,6 +64,7 @@ export default {
         antialias: true,
         logarithmicDepthBuffer: true
       });
+      this.renderer = renderer;
       renderer.setSize(el.clientWidth, el.clientHeight);
       el.appendChild(renderer.domElement);
 
@@ -87,6 +111,15 @@ export default {
         //   设置渲染器的像素比
         renderer.setPixelRatio(window.devicePixelRatio);
       });
+    },
+    resizeFn () {
+      //   更新渲染器
+      // const el = document.getElementById('container');
+      const el = this.$refs.el;
+      console.log('el.clientWidth', el.clientWidth);
+      this.renderer.setSize(el.clientWidth, el.clientHeight);
+      //   设置渲染器的像素比
+      this.renderer.setPixelRatio(window.devicePixelRatio);
     }
   }
 };
@@ -96,5 +129,7 @@ export default {
 .container {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  background-color: #42b983;
 }
 </style>
