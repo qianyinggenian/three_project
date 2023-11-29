@@ -59,14 +59,14 @@ export default {
       controls.enableDamping = true;
 
       const dracoLoader = new DRACOLoader();
-      const dracoUrl = getResourcePath('/static/draco/gltf/');
+      const dracoUrl = getResourcePath('/static/draco/gltf/','three_project');
           // dracoLoader.setDecoderPath('/static/draco/gltf/');
       dracoLoader.setDecoderPath(dracoUrl);
 
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
       // const url = '/static/models/gltf/LittlestTokyo.glb';
-      const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb');
+      const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb','three_project');
       // const glbUrl = process.env.NODE_ENV === 'production' ? `/three_project${url}` : url;
       // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
       loader.load(glbUrl, function (gltf) {
