@@ -11,6 +11,7 @@ module.exports = {
   publicPath: './',
   // publicPath: process.env.NODE_ENV === 'production'
   //   ? '/yian/' : './',
+  outputDir: 'docs',
   devServer: {
     port: 8888,
     proxy: {
