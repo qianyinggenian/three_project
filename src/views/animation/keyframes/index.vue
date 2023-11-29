@@ -10,7 +10,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-// import { getResourcePath } from "@/common/js/utils";
+import { getResourcePath } from "@/common/js/utils";
 
 export default {
   name: 'index',
@@ -59,15 +59,15 @@ export default {
       controls.enableDamping = true;
 
       const dracoLoader = new DRACOLoader();
-      // const dracoUrl = process.env.NODE_ENV === 'production' ? '/three_project/static/draco/gltf/' : '/static/draco/gltf/';
-          dracoLoader.setDecoderPath('/static/draco/gltf/');
-      // dracoLoader.setDecoderPath(dracoUrl);
+      const dracoUrl = getResourcePath('/static/draco/gltf/');
+          // dracoLoader.setDecoderPath('/static/draco/gltf/');
+      dracoLoader.setDecoderPath(dracoUrl);
 
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
-      const url = '/static/models/gltf/LittlestTokyo.glb';
-      // const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb');
-      const glbUrl = process.env.NODE_ENV === 'production' ? `/three_project${url}` : url;
+      // const url = '/static/models/gltf/LittlestTokyo.glb';
+      const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb');
+      // const glbUrl = process.env.NODE_ENV === 'production' ? `/three_project${url}` : url;
       // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
       loader.load(glbUrl, function (gltf) {
         const model = gltf.scene;
