@@ -5,6 +5,5 @@ export function getResourcePath (path, systemCode= 'three_project') {
   } else {
     urlPath = path;
   }
-  // return process.env.NODE_ENV === 'production' ? `/${systemCode}${path}` : path;
   return urlPath;
 }
