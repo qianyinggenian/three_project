@@ -28,6 +28,22 @@ export const config = [
     }
   },
   {
+    path: '/test',
+    name: 'test1',
+    component: test,
+    meta: {
+      title: '测试1'
+    }
+  },
+  {
+    path: '/test',
+    name: 'test2',
+    component: test,
+    meta: {
+      title: '测试2'
+    }
+  },
+  {
     path: '/keyframes',
     name: 'keyframes',
     component: () => import('@/views/animation/keyframes/index.vue'),
