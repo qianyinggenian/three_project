@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div class="header-container">threeJs学习
-        <img src="/static/images/18.jpg" width="60" height="60" alt="">
+<!--        <img src="/static/images/18.jpg" width="60" height="60" alt="">-->
       </div>
     </el-header>
     <el-container class="content-container">
