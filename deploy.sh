@@ -20,7 +20,7 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # 部署到 https://qianyinggenian.github.io
-# git push -f git@github.com:qianyinggenian/qianyinggenian.github.io.git master
+# git push -f git@github.com:qianyinggenian/qianyinggenian.github.io.git gh-pages
 
 # 部署到 https://<USERNAME>.github.io/<REPO>
  git push -f git@github.com:qianyinggenian/three_project.git master:gh-pages
