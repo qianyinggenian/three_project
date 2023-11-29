@@ -8,9 +8,8 @@ function resolve (dir) {
 }
 
 module.exports = {
-  // publicPath: './',
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/' : './',
+  publicPath: './',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/' : './',
   // outputDir: '/docs',
   devServer: {
     port: 8888,
