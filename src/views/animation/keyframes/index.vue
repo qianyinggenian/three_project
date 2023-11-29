@@ -59,9 +59,9 @@ export default {
       controls.enableDamping = true;
 
       const dracoLoader = new DRACOLoader();
-      const dracoUrl = process.env.NODE_ENV === 'production' ? '/three_project/static/draco/gltf/' : '/static/draco/gltf/';
-          // dracoLoader.setDecoderPath('/static/draco/gltf/');
-      dracoLoader.setDecoderPath(dracoUrl);
+      // const dracoUrl = process.env.NODE_ENV === 'production' ? '/three_project/static/draco/gltf/' : '/static/draco/gltf/';
+          dracoLoader.setDecoderPath('/static/draco/gltf/');
+      // dracoLoader.setDecoderPath(dracoUrl);
 
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
