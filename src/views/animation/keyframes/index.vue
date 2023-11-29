@@ -65,7 +65,7 @@ export default {
       loader.setDRACOLoader(dracoLoader);
       const url = '/static/models/gltf/LittlestTokyo.glb';
       // const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb');
-      const glbUrl = process.env.NODE_ENV === 'production' ? `/three_project/${url}` : url;
+      const glbUrl = process.env.NODE_ENV === 'production' ? `/three_project${url}` : url;
       // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
       loader.load(glbUrl, function (gltf) {
         const model = gltf.scene;
