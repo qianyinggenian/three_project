@@ -8,8 +8,8 @@ function resolve (dir) {
 }
 
 module.exports = {
-  publicPath: './',
-  // publicPath: process.env.NODE_ENV === 'production' ? '/' : './',
+  // publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production' ? '/three_project/' : '/three_project/',
   // outputDir: '/docs',
   devServer: {
     port: 8888,
@@ -33,7 +33,7 @@ module.exports = {
     index: {
       entry: 'src/main.js',
       template: 'public/index.html',
-      title: '浅影歌年'
+      title: 'threeJs学习'
     }
   },
   configureWebpack: {

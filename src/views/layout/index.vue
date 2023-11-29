@@ -1,7 +1,9 @@
 <template>
   <el-container>
     <el-header>
-      <div class="header-container">threeJs学习</div>
+      <div class="header-container">threeJs学习
+        <img src="/three_project/static/images/18.jpg" width="60" height="60" alt="">
+      </div>
     </el-header>
     <el-container class="content-container">
       <el-aside  :style="{width: isCollapse ? '65px': '200px'}">
