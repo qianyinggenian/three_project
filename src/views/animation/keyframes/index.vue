@@ -10,6 +10,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { getResourcePath } from "@/common/js/utils";
+
 export default {
   name: 'index',
   components: {},
@@ -61,7 +63,9 @@ export default {
 
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
-      loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
+      const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb');
+      // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
+      loader.load(glbUrl, function (gltf) {
         const model = gltf.scene;
         model.position.set(1, 1, 1);
         model.scale.set(0.01, 0.01, 0.01);
