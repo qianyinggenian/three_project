@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    dfsddf
+    首页首页首页
   </div>
 </template>
 
