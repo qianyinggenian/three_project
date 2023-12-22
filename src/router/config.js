@@ -1,5 +1,7 @@
 import redirectComp from '../views/redirect';
-import test from '@/views/test/index.vue';
+import digital from '@/views/digital/index.vue';
+// import test from '@/views/test/index.vue';
+import wangEditor from '@/views/wangEditor/index.vue';
 export const config = [
   {
     path: '/setting',
@@ -20,27 +22,19 @@ export const config = [
     ]
   },
   {
-    path: '/test',
-    name: 'test',
-    component: test,
+    path: '/digital',
+    name: 'digital',
+    component: digital,
     meta: {
-      title: '测试'
+      title: '南中项目'
     }
   },
   {
-    path: '/test',
-    name: 'test1',
-    component: test,
+    path: '/wangEditor',
+    name: 'wangEditor',
+    component: wangEditor,
     meta: {
-      title: '测试1'
-    }
-  },
-  {
-    path: '/test',
-    name: 'test2',
-    component: test,
-    meta: {
-      title: '测试2'
+      title: 'wangEditor'
     }
   },
   {
@@ -49,6 +43,14 @@ export const config = [
     component: () => import('@/views/animation/keyframes/index.vue'),
     meta: {
       title: 'keyframes'
+    }
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('@/views/test/index.vue'),
+    meta: {
+      title: 'test'
     }
   }
 ];

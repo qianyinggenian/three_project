@@ -9,8 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   publicPath: './',
-  // publicPath: process.env.NODE_ENV === 'production' ? '/three_project/' : '/',
-  // outputDir: '/docs',
+  // publicPath: process.env.NODE_ENV === 'production'
+  //   ? '/yian/' : './',
   devServer: {
     port: 8888,
     proxy: {

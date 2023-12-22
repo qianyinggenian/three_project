@@ -65,6 +65,7 @@ export default {
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
       const glbUrl = getResourcePath('/static/models/gltf/LittlestTokyo.glb', 'three_project');
+      // const glbUrl = getResourcePath('/static/digital/models/洪奇门大桥全貌Draco.gltf', 'three_project');
       // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
       loader.load(glbUrl, function (gltf) {
         const model = gltf.scene;
