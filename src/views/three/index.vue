@@ -139,9 +139,9 @@ export default {
     },
     addDirectionalLight () {
       directionalLight = new THREE.DirectionalLight(0xeeb584, 1);
-      directionalLight.position.set(10, 0, 500);
+      directionalLight.position.set(300, -100, 300);
       const directionalLight2 = new THREE.DirectionalLight(0xeeb584, 1);
-      directionalLight2.position.set(10, 0, -500);
+      directionalLight2.position.set(10, 250, -500);
       scene.add(directionalLight);
       scene.add(directionalLight2);
     }
