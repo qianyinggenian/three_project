@@ -52,5 +52,13 @@ export const config = [
     meta: {
       title: 'test'
     }
+  },
+  {
+    path: '/three',
+    name: 'three',
+    component: () => import('@/views/three/index.vue'),
+    meta: {
+      title: 'three'
+    }
   }
 ];
