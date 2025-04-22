@@ -60,5 +60,21 @@ export const config = [
     meta: {
       title: 'three'
     }
+  },
+  {
+    path: '/ThreejsView',
+    name: 'ThreejsView',
+    component: () => import('@/views/three/ThreejsView.vue'),
+    meta: {
+      title: 'ThreejsView'
+    }
+  },
+  {
+    path: '/ThreejsView2',
+    name: 'ThreejsView2',
+    component: () => import('@/views/three/index2.vue'),
+    meta: {
+      title: 'ThreejsView2'
+    }
   }
 ];
