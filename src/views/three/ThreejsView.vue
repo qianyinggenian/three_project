@@ -58,8 +58,10 @@ export default {
         USE_FAST_BOOLS: true
       });
 
-      ifcLoader.load('/static/models/ifc/rac_advanced_sample_project.ifc', (model) => {
-        scene.add(model.mesh);
+      const url = '/static/models/ifc/rac_advanced_sample_project.ifc';
+      // const url = '/static/models/ifc/斜拉桥20250417-6.ifc';
+      ifcLoader.load(url, (model) => {
+        scene.add(model);
         this.render();
       });
 
