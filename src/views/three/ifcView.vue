@@ -16,14 +16,25 @@ export default {
   name: 'index',
   data () {
     return {
-      fileName: ''
+      tabs: [
+        {
+          label: '默认',
+          value: '默认'
+        },
+        {
+          label: '动态',
+          value: '动态'
+        }
+      ],
+      activeTab: '默认',
+      fileName: '斜拉桥20250417-6.ifc'
     };
   },
   mounted () {
     this.$nextTick(() => {
-      console.log('clientWidth', this.$refs.threeContainer.clientWidth);
-      console.log('clientHeight', this.$refs.threeContainer.clientHeight);
-      // this.init();
+      if (this.activeTab === '默认') {
+        this.init();
+      }
     });
   },
   methods: {
@@ -75,7 +86,12 @@ export default {
       });
 
       // const url = '/static/models/ifc/rac_advanced_sample_project.ifc';
-      const url = this.previewPath;
+      let url;
+      if (this.activeTab === '默认') {
+        url = '/static/models/ifc/斜拉桥20250417-6.ifc';
+      } else {
+        url = this.previewPath;
+      }
       // const url = '/static/models/ifc/斜拉桥20250417-6.ifc';
       // 显示加载进度
       const loadingContainer = document.createElement('div');
@@ -279,6 +295,17 @@ export default {
         gui.destroy(); // 销毁 dat.GUI 实例
         gui = null;
       }
+    },
+
+    handleClickTab (item) {
+      this.activeTab = item.value;
+      this.cleanupScene();
+      this.destroyGUI();
+      if (this.activeTab === '默认') {
+        this.$nextTick(() => {
+          this.init();
+        });
+      }
     }
   },
   beforeDestroy () {
@@ -292,7 +319,17 @@ export default {
 <template>
   <div class="container">
    <div class="upload-container">
-     <el-upload action="" :before-upload="handlePreview" accept=".ifc">
+
+     <div class="tabs-box">
+       <div class="tab"
+            v-for="(item,index) in tabs"
+            :key="index"
+            :class="activeTab === item.value ? 'active-tab': ''"
+            @click="handleClickTab(item)"
+       >
+         {{ item.label }}</div>
+     </div>
+     <el-upload action="" :before-upload="handlePreview" accept=".ifc"  v-if="activeTab === '动态'">
        <el-button type="primary" size="small">上传文件</el-button>
      </el-upload>
      <span class="fileName">模型名称：{{fileName}}</span>
@@ -313,6 +350,28 @@ export default {
     align-items: center;
     .fileName {
       margin-left: 16px;
+    }
+
+    .tabs-box {
+      display: flex;
+      margin-right: 16px;
+      .tab {
+        box-sizing: border-box;
+        padding: 5px 16px;
+        border: 1px  solid #ccc;
+        cursor: pointer;
+        &:first-child {
+          border-radius: 8px 0 0 8px;
+        }
+        &:last-child {
+          border-radius: 0 8px 8px 0;
+        }
+      }
+      .active-tab {
+        background: #409eff;
+        color: white;
+        border: 1px  solid #409eff;
+      }
     }
   }
   .three-container {
