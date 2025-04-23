@@ -220,26 +220,26 @@ export default {
 
       // 添加调试选项：相机位置
       const cameraFolder = gui.addFolder('Camera Position');
-      cameraFolder.add(camera.position, 'x', -2000, 2000).name('Position X').step(0.01).onChange(this.render);
-      cameraFolder.add(camera.position, 'y', -2000, 2000).name('Position Y').step(0.01).onChange(this.render);
-      cameraFolder.add(camera.position, 'z', -2000, 2000).name('Position Z').step(0.01).onChange(this.render);
+      cameraFolder.add(camera.position, 'x', -50000, 50000).name('Position X').step(0.01).onChange(this.render);
+      cameraFolder.add(camera.position, 'y', -50000, 50000).name('Position Y').step(0.01).onChange(this.render);
+      cameraFolder.add(camera.position, 'z', -50000, 50000).name('Position Z').step(0.01).onChange(this.render);
       cameraFolder.open();
 
       // 添加调试选项：相机目标点
       const targetFolder = gui.addFolder('Camera Target');
       const target = new THREE.Vector3(); // 创建一个目标点向量
       controls.target.copy(target); // 初始化目标点
-      targetFolder.add(target, 'x', -2000, 2000).name('Target X').step(0.01).onChange(() => {
+      targetFolder.add(target, 'x', -50000, 50000).name('Target X').step(0.01).onChange(() => {
         controls.target.copy(target); // 更新目标点
         controls.update();
         this.render();
       });
-      targetFolder.add(target, 'y', -2000, 2000).name('Target Y').step(0.01).onChange(() => {
+      targetFolder.add(target, 'y', -50000, 50000).name('Target Y').step(0.01).onChange(() => {
         controls.target.copy(target);
         controls.update();
         this.render();
       });
-      targetFolder.add(target, 'z', -2000, 2000).name('Target Z').step(0.01).onChange(() => {
+      targetFolder.add(target, 'z', -50000, 50000).name('Target Z').step(0.01).onChange(() => {
         controls.target.copy(target);
         controls.update();
         this.render();
@@ -252,10 +252,10 @@ export default {
         directionalLight1.color.set(value); // 更新光源颜色
         this.render();
       });
-      light1Folder.add(directionalLight1.position, 'x', -10, 10).name('Position X').onChange(this.render);
-      light1Folder.add(directionalLight1.position, 'y', -10, 10).name('Position Y').onChange(this.render);
-      light1Folder.add(directionalLight1.position, 'z', -10, 10).name('Position Z').onChange(this.render);
-      light1Folder.add(directionalLight1, 'intensity', 0, 5).name('Intensity').step(0.1).onChange(this.render);
+      light1Folder.add(directionalLight1.position, 'x', -50000, 50000).name('Position X').step(0.1).onChange(this.render);
+      light1Folder.add(directionalLight1.position, 'y', -50000, 50000).name('Position Y').step(0.1).onChange(this.render);
+      light1Folder.add(directionalLight1.position, 'z', -50000, 50000).name('Position Z').step(0.1).onChange(this.render);
+      light1Folder.add(directionalLight1, 'intensity', 0, 20).name('Intensity').step(0.1).onChange(this.render);
       light1Folder.open();
 
       // 添加调试选项：DirectionalLight2 的颜色
@@ -265,10 +265,10 @@ export default {
         directionalLight2.color.set(value); // 更新光源颜色
         this.render();
       });
-      light2Folder.add(directionalLight2.position, 'x', -10, 10).name('Position X').onChange(this.render);
-      light2Folder.add(directionalLight2.position, 'y', -10, 10).name('Position Y').onChange(this.render);
-      light2Folder.add(directionalLight2.position, 'z', -10, 10).name('Position Z').onChange(this.render);
-      light2Folder.add(directionalLight2, 'intensity', 0, 5).name('Intensity').step(0.1).onChange(this.render);
+      light2Folder.add(directionalLight2.position, 'x', -50000, 50000).name('Position X').step(0.1).onChange(this.render);
+      light2Folder.add(directionalLight2.position, 'y', -50000, 50000).name('Position Y').step(0.1).onChange(this.render);
+      light2Folder.add(directionalLight2.position, 'z', -50000, 50000).name('Position Z').step(0.1).onChange(this.render);
+      light2Folder.add(directionalLight2, 'intensity', 0, 20).name('Intensity').step(0.1).onChange(this.render);
       light2Folder.open();
 
       // 添加调试选项：AmbientLight 的颜色和强度
@@ -278,7 +278,7 @@ export default {
         ambientLight.color.set(value); // 更新环境光颜色
         this.render();
       });
-      ambientLightFolder.add(ambientLight, 'intensity', 0, 2).name('Intensity').step(0.1).onChange(this.render);
+      ambientLightFolder.add(ambientLight, 'intensity', 0, 20).name('Intensity').step(0.1).onChange(this.render);
       ambientLightFolder.open();
     },
     cleanupScene () {
