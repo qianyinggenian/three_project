@@ -62,11 +62,11 @@ export const config = [
     }
   },
   {
-    path: '/ThreejsView',
-    name: 'ThreejsView',
-    component: () => import('@/views/three/ThreejsView.vue'),
+    path: '/ifcView',
+    name: 'ifcView',
+    component: () => import('@/views/three/ifcView.vue'),
     meta: {
-      title: 'ThreejsView'
+      title: 'ifcView'
     }
   }
 ];

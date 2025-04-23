@@ -47,7 +47,7 @@ export default {
 
         // Lights
         directionalLight1 = new THREE.DirectionalLight(0xffeeff, 1);
-        directionalLight1.position.set(1, 1, 1);
+        directionalLight1.position.set(1, -1.1, -0.2);
         scene.add(directionalLight1);
 
         directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
