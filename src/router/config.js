@@ -56,9 +56,9 @@ export const config = [
   {
     path: '/three',
     name: 'three',
-    component: () => import('@/views/three/index.vue'),
+    component: () => import('@/views/three/gltfView.vue'),
     meta: {
-      title: 'three'
+      title: 'gltfView'
     }
   },
   {
