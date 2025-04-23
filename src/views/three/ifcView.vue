@@ -88,7 +88,7 @@ export default {
       // const url = '/static/models/ifc/rac_advanced_sample_project.ifc';
       let url;
       if (this.activeTab === '默认') {
-        url = '/static/models/ifc/斜拉桥20250417-6.ifc';
+        url = '/static/models/ifc/rac_advanced_sample_project.ifc';
       } else {
         url = this.previewPath;
       }
