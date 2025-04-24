@@ -87,8 +87,8 @@ export default {
         camera = new THREE.PerspectiveCamera(55, el.clientWidth / el.clientHeight, 1, 20000);
         // 创建渲染器
         renderer = new THREE.WebGLRenderer({
-          antialias: true
-          // logarithmicDepthBuffer: true
+          antialias: true,
+          logarithmicDepthBuffer: true
         });
         // 设置渲染器的初始颜色
         renderer.setClearColor(new THREE.Color(0x87ceeb));
@@ -192,9 +192,9 @@ export default {
       scene.add(ambientLight);
     },
     addDirectionalLight () {
-      directionalLight1 = new THREE.DirectionalLight(0xeeb584, 1);
+      directionalLight1 = new THREE.DirectionalLight(0xeeb584, 10);
       directionalLight1.position.set(300, -100, 300);
-      directionalLight2 = new THREE.DirectionalLight(0xeeb584, 1);
+      directionalLight2 = new THREE.DirectionalLight(0xeeb584, 10);
       directionalLight2.position.set(10, 250, -500);
       scene.add(directionalLight1);
       scene.add(directionalLight2);

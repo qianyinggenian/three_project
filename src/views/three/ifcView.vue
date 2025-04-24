@@ -27,7 +27,7 @@ export default {
         }
       ],
       activeTab: '默认',
-      fileName: '斜拉桥20250417-6.ifc'
+      fileName: 'rac_advanced_sample_project.ifc'
     };
   },
   mounted () {
@@ -46,9 +46,7 @@ export default {
         this.addAxesHelper();
         // Camera
         camera = new THREE.PerspectiveCamera(45, this.$refs.threeContainer.clientWidth / this.$refs.threeContainer.clientHeight, 0.1, 1000);
-        camera.position.z = -70;
-        camera.position.y = 25;
-        camera.position.x = 90;
+        camera.position.set(90, 25, -70);
 
         // Initial cube
         const geometry = new THREE.BoxGeometry();
