@@ -68,5 +68,13 @@ export const config = [
     meta: {
       title: 'ifcView'
     }
+  },
+  {
+    path: '/oceanView',
+    name: 'oceanView',
+    component: () => import('@/views/ocean/index.vue'),
+    meta: {
+      title: 'oceanView'
+    }
   }
 ];
