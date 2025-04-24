@@ -8,7 +8,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 
-let stats;
+let stats, gui;
 let camera, scene, renderer;
 let controls, water, sun, mesh;
 export default {
@@ -141,7 +141,7 @@ export default {
 
       // GUI
 
-      const gui = new GUI();
+      gui = new GUI();
 
       const folderSky = gui.addFolder('Sky');
       folderSky.add(parameters, 'elevation', 0, 90, 0.1).onChange(updateSun);
@@ -179,7 +179,17 @@ export default {
       water.material.uniforms.time.value += 1.0 / 60.0;
 
       renderer.render(scene, camera);
+    },
+
+    destroyGUI () {
+      if (gui) {
+        gui.destroy(); // 销毁 dat.GUI 实例
+        gui = null;
+      }
     }
+  },
+  beforeDestroy () {
+    this.destroyGUI();
   }
 };
 </script>
