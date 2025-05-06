@@ -5,6 +5,7 @@ import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 
 import { IFCLoader } from 'web-ifc-three/IFCLoader';
 import { IFCSPACE } from 'web-ifc';
+import { getResourcePath } from '@/common/js/utils';
 // import { getResourcePath } from '@/common/js/utils';
 // import { getResourcePath } from '@/utils/util';
 // import { IFCLoader } from 'three/examples/jsm/loaders/IFCLoader';
@@ -86,7 +87,7 @@ export default {
       // const url = '/static/models/ifc/rac_advanced_sample_project.ifc';
       let url;
       if (this.activeTab === '默认') {
-        url = '/static/models/ifc/rac_advanced_sample_project.ifc';
+        url = getResourcePath('/static/models/ifc/rac_advanced_sample_project.ifc', 'three_project');
       } else {
         url = this.previewPath;
       }

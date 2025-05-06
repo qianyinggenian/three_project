@@ -138,7 +138,7 @@ export default {
       if (this.activeTab === '动态') {
         glbUrl = this.previewPath;
       } else {
-        glbUrl = getResourcePath('/static/digital/models/洪奇沥大桥.gltf', 'three_project');
+        glbUrl = getResourcePath('/static/digital/models/大桥.gltf', 'three_project');
       }
       // loader.load('/static/models/gltf/LittlestTokyo.glb', function (gltf) {
       loader.load(glbUrl, function (gltf) {
