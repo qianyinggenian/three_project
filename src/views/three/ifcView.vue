@@ -13,6 +13,7 @@ import { getResourcePath } from '@/common/js/utils';
 let scene, camera, renderer, controls;
 let gui;
 let ambientLight, directionalLight1, directionalLight2;
+let loadingContainer;
 export default {
   name: 'index',
   data () {
@@ -93,7 +94,7 @@ export default {
       }
       // const url = '/static/models/ifc/斜拉桥20250417-6.ifc';
       // 显示加载进度
-      const loadingContainer = document.createElement('div');
+      loadingContainer = document.createElement('div');
       loadingContainer.style.position = 'absolute';
       loadingContainer.style.top = '50px';
       loadingContainer.style.left = '10px';
@@ -122,7 +123,7 @@ export default {
         // 初始化 GUI
         this.initGUI();
       }, (xhr) => {
-        console.log('xhr', xhr);
+        // console.log('xhr', xhr);
         // 更新加载进度
         if (xhr.total > 0) {
           const progress = Math.round((xhr.loaded / xhr.total) * 100);
@@ -259,6 +260,9 @@ export default {
         renderer.forceContextLoss();
         renderer.domElement.remove();
         renderer = null;
+      }
+      if (loadingContainer) {
+        loadingContainer.remove();
       }
 
       if (scene) {
