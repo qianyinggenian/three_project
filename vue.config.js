@@ -26,12 +26,6 @@ module.exports = {
         headers: {
           Referer: 'https://fastly.picsum.photos'
         }
-      },
-      '/js/static/web-ifc/': {
-        target: 'http://localhost:8888/static/web-ifc', // 代理的目标地址
-        changeOrigin: false,
-        // secure: false, // 如果目标服务器使用 HTTPS，则需要设置为 true
-        pathRewrite: { '^/js/static/web-ifc/': '' }
       }
     }
   },
