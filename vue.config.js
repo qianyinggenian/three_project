@@ -8,7 +8,7 @@ function resolve (dir) {
 }
 
 module.exports = {
-  // publicPath: './',
+  publicPath: './',
   // publicPath: process.env.NODE_ENV === 'production'
   //   ? '/yian/' : './',
   devServer: {
