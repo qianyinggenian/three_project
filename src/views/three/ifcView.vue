@@ -72,7 +72,7 @@ export default {
       // Setup IFC Loader
       const ifcLoader = new IFCLoader();
       // await ifcLoader.ifcManager.setWasmPath('static/web-ifc/');
-      const webIfcUrl = 'web-ifc/';
+      const webIfcUrl = 'web-ifc/'; // 路径
       await ifcLoader.ifcManager.setWasmPath(webIfcUrl);
 
       await ifcLoader.ifcManager.parser.setupOptionalCategories({
