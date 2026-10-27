@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>Three.js 机房服务器状态 - 故障光圈</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0b0f19;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+        #panel {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            color: #d0d8e8;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            background: rgba(10, 16, 30, 0.85);
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+        #buttons {
+            position: fixed;
+            top: 64px;
+            left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        button {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            background: #1e293b;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #334155;
+        }
+    </style>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+          }
+        }
+    </script>
+</head>
+<body>
+<div id="panel">
+    机房服务器状态：正常浅绿 / 故障红色闪烁 / 离线灰色
+</div>
+<div id="buttons"></div>
+
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+  // ---------- 状态配置 ----------
+  const STATUS_COLORS = {
+    normal: 0x6ee7a6,
+    fault: 0xf53f3f,
+    offline: 0x9ca3af
+  };
+
+  const FAULT = {
+    baseEmissive: 0x330000,
+    peakEmissive: 0xff2222,
+    minIntensity: 0.35,
+    maxIntensity: 1,
+
+    bodySpeed: 3.2,     // 机身闪烁速度
+    haloSpeed: 4.0,     // 光圈呼吸速度
+    haloPhase: 0.6,     // 光圈相位偏移，让节奏更错开
+
+    haloColor: 0xff2222,
+    haloMinScale: 1.6,
+    haloMaxScale: 2.6,
+    haloMinOpacity: 0.25,
+    haloMaxOpacity: 0.85
+  };
+
+  // ---------- 场景 ----------
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0b0f19);
+
+  const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.set(8, 6, 10);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  document.body.appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  // ---------- 灯光 ----------
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  dirLight.position.set(5, 10, 7);
+  scene.add(dirLight);
+
+  // ---------- 地面 ----------
+  const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(30, 30),
+    new THREE.MeshStandardMaterial({ color: 0x0f1724, roughness: 0.9 })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -0.6;
+  scene.add(floor);
+
+  // ---------- 服务器管理 ----------
+  const serverMap = new Map();
+  const faultServers = new Set();
+
+  function createServer(id, options = {}) {
+    const {
+      width = 1.1,
+      height = 0.6,
+      depth = 1.8,
+      position = { x: 0, y: 0, z: 0 }
+    } = options;
+
+    const geometry = new THREE.BoxGeometry(width, height, depth);
+
+    const material = new THREE.MeshStandardMaterial({
+      color: STATUS_COLORS.offline,
+      metalness: 0.3,
+      roughness: 0.55,
+      emissive: 0x000000,
+      emissiveIntensity: 0
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(position.x, position.y, position.z);
+    mesh.userData.id = id;
+    mesh.userData.status = "offline";
+
+    const halo = createHalo();
+    halo.position.set(
+      position.x,
+      position.y + height * 0.5 + 0.05,
+      position.z
+    );
+    halo.visible = false;
+    scene.add(halo);
+
+    mesh.userData.halo = halo;
+
+    serverMap.set(id, mesh);
+    scene.add(mesh);
+    return mesh;
+  }
+
+  function createHalo() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 128;
+    canvas.height = 128;
+    const ctx = canvas.getContext("2d");
+
+    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gradient.addColorStop(0, "rgba(255, 60, 60, 0)");
+    gradient.addColorStop(0.35, "rgba(255, 60, 60, 0.9)");
+    gradient.addColorStop(0.7, "rgba(255, 40, 40, 0.6)");
+    gradient.addColorStop(1, "rgba(255, 0, 0, 0)");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 128, 128);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      color: FAULT.haloColor,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    const sprite = new THREE.Sprite(material);
+    sprite.renderOrder = 999;
+    sprite.scale.set(FAULT.haloMinScale, FAULT.haloMinScale, 1);
+    return sprite;
+  }
+
+  function updateServerStatus(id, status) {
+    const mesh = serverMap.get(id);
+    if (!mesh) return;
+
+    const color = STATUS_COLORS[status];
+    if (!color) {
+      console.warn("未知服务器状态:", status);
+      return;
+    }
+
+    mesh.userData.status = status;
+
+    const material = mesh.material;
+    if (!material) return;
+
+    material.color.set(color);
+
+    const halo = mesh.userData.halo;
+
+    if (status === "fault") {
+      faultServers.add(id);
+      material.emissive.set(FAULT.baseEmissive);
+      material.emissiveIntensity = FAULT.minIntensity;
+
+      if (halo) {
+        halo.visible = true;
+        halo.material.color.set(FAULT.haloColor);
+      }
+    } else {
+      faultServers.delete(id);
+      material.emissive.set(0x000000);
+      material.emissiveIntensity = 0;
+
+      if (halo) {
+        halo.visible = false;
+      }
+    }
+  }
+
+  // ---------- 故障闪烁 ----------
+  const clock = new THREE.Clock();
+
+  function animateFaultPulse() {
+    if (faultServers.size === 0) return;
+
+    const t = clock.getElapsedTime();
+
+    // 机身：快一点闪烁
+    const bodyPulse =
+      FAULT.minIntensity +
+      (FAULT.maxIntensity - FAULT.minIntensity) *
+      (Math.sin(t * FAULT.bodySpeed) * 0.5 + 0.5);
+
+    const base = new THREE.Color(FAULT.baseEmissive);
+    const peak = new THREE.Color(FAULT.peakEmissive);
+    const emissive = base.clone().lerp(peak, bodyPulse);
+
+    // 光圈：慢一点呼吸，并带相位偏移
+    const haloPulse =
+      Math.sin(t * FAULT.haloSpeed + FAULT.haloPhase) * 0.5 + 0.5;
+
+    const haloScale =
+      FAULT.haloMinScale +
+      (FAULT.haloMaxScale - FAULT.haloMinScale) * haloPulse;
+
+    const haloOpacity =
+      FAULT.haloMinOpacity +
+      (FAULT.haloMaxOpacity - FAULT.haloMinOpacity) * haloPulse;
+
+    for (const id of faultServers) {
+      const mesh = serverMap.get(id);
+      if (!mesh?.material) continue;
+
+      mesh.material.emissive.copy(emissive);
+      mesh.material.emissiveIntensity = bodyPulse;
+
+      const halo = mesh.userData.halo;
+      if (halo && halo.visible) {
+        halo.scale.set(haloScale, haloScale, 1);
+        halo.material.opacity = haloOpacity;
+      }
+    }
+  }
+
+  // ---------- 创建服务器 ----------
+  const servers = [
+    { id: "server-01", x: -3 },
+    { id: "server-02", x: 0 },
+    { id: "server-03", x: 3 }
+  ];
+
+  servers.forEach((s) => {
+    createServer(s.id, {
+      position: { x: s.x, y: 0, z: 0 }
+    });
+  });
+
+  updateServerStatus("server-01", "normal");
+  updateServerStatus("server-02", "offline");
+  updateServerStatus("server-03", "normal");
+
+  // ---------- 控制按钮 ----------
+  const buttonsContainer = document.getElementById("buttons");
+
+  function createButton(label, fn) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.addEventListener("click", fn);
+    buttonsContainer.appendChild(btn);
+  }
+
+  createButton("server-01 正常", () => updateServerStatus("server-01", "normal"));
+  createButton("server-01 故障", () => updateServerStatus("server-01", "fault"));
+  createButton("server-02 离线", () => updateServerStatus("server-02", "offline"));
+  createButton("server-02 正常", () => updateServerStatus("server-02", "normal"));
+  createButton("server-03 故障", () => updateServerStatus("server-03", "fault"));
+  createButton("全部恢复", () => {
+    for (const id of serverMap.keys()) {
+      updateServerStatus(id, "normal");
+    }
+  });
+
+  // ---------- 渲染循环 ----------
+  function animate() {
+    requestAnimationFrame(animate);
+    animateFaultPulse();
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
+</body>
+</html>

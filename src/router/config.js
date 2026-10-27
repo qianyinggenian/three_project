@@ -76,5 +76,13 @@ export const config = [
     meta: {
       title: 'oceanView'
     }
+  },
+  {
+    path: '/serverRoom',
+    name: 'serverRoom',
+    component: () => import('@/views/serverRoom/index.vue'),
+    meta: {
+      title: 'serverRoom'
+    }
   }
 ];
